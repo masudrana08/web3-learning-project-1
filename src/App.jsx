@@ -1,7 +1,8 @@
 import './App.css';
 import React, {useEffect, useState} from 'react'
-import ABI from './config/ABI';
+import SimpleSolABI from './config/SimpleSolABI';
 import Web3 from 'web3';
+import Transaction from './components/Transaction';
 
 function App() {
   const web3 = new Web3("http://localhost:7545");
@@ -14,6 +15,7 @@ function App() {
       window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(accounts=>{
         setAccount(accounts[0])
+        window.account = accounts[0]
       })
     }
     web3.eth.Contract.setProvider('ws://localhost:7545');
@@ -21,10 +23,11 @@ function App() {
     
   window.ethereum.on("accountsChanged", accounts=>{
     setAccount(accounts[0])
+    window.account = accounts[0]
   })
 
   const address = "0x7a2C8446d038966c2e03aa44e8305C74fC3eF83F"
-  const contract = new web3.eth.Contract(ABI, address)
+  const contract = new web3.eth.Contract(SimpleSolABI, address)
 
   
   // Read data from Smart Contract
@@ -46,6 +49,10 @@ function App() {
         <input type="text" onChange={(e)=>setValue(e.target.value)} />
         <button onClick={()=>setData(value)}>set</button> <br/>
         <button onClick={readData}>Read Data</button> 
+
+        <div>
+          <Transaction />
+        </div>
     </div>
   );
 }

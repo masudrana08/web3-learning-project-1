@@ -1,4 +1,4 @@
-const ABI = [
+const SimpleSolABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -44,4 +44,4 @@ const ABI = [
 		"type": "function"
 	}
 ]
-export default ABI
+export default SimpleSolABI
